@@ -270,32 +270,20 @@ class WordsApiTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(200, $result->Code);
     }
     
-    /*public function testPostDocumentSaveAs()
+    public function testPostDocumentSaveAs()
     {       
-        $xml = <<<XML
-                <PdfSaveOptions>
-                    <SaveFormat>pdf</SaveFormat>
-                    <FileName>Test.pdf</FileName>
-                    <ImageCompression>Jpeg</ImageCompression>
-                    <JpegQuality>70</JpegQuality>
-                    <TextCompression>Flate</TextCompression>
-                 </PdfSaveOptions>
-XML;
-        $body = simplexml_load_string($xml);
-        
-        //$body = '{
-        //            "PdfSaveOptions": {
-        //                "SaveFormat":"pdf",
-        //                "FileName":"Test.pdf",
-        //                "ImageCompression":"Jpeg",
-        //                "JpegQuality":70,
-        //                "TextCompression":"Flate"
-        //            }
-        //         }';
+        $body = '{
+                    "SaveFormat": "pdf",
+                    "FileName": "Test.pdf",
+                    "ImageCompression": "Jpeg",
+                    "JpegQuality": 70,
+                    "TextCompression": "Flate"
+                 }';
 
-        $result = $this->words->PostDocumentSaveAs($name="Test.docx", $storage = null, $folder = null, $body);
+        $response = $this->words->PostDocumentSaveAs($name="Test.docx", $storage = null, $folder = null, $body);
+        $result = json_decode($response);
         $this->assertEquals(200, $result->Code);
-    }*/
+    }
     
     public function testPostFormField()
     {
@@ -352,11 +340,21 @@ XML;
         $this->assertEquals(200, $result->Code);
     }
     
-    /*public function testPostLoadWebDocument()
+    public function testPostLoadWebDocument()
     {
-        $result = $this->words->PostLoadWebDocument();
+        $xml = <<<XML
+          <LoadWebDocumentData>
+             <LoadingDocumentUrl>http://google.com</LoadingDocumentUrl>
+             <DocSaveOptionsData>
+             <SaveFormat>doc</SaveFormat>
+             <FileName>google.doc</FileName>
+             </DocSaveOptionsData>
+          </LoadWebDocumentData>
+XML;
+        $strXML = simplexml_load_string($xml);
+        $result = $this->words->PostLoadWebDocument($strXML->asXML());
         $this->assertEquals(200, $result->Code);
-    }*/
+    }
     
     public function testPostReplaceText()
     {
@@ -413,11 +411,28 @@ XML;
         $this->assertEquals(200, $result->Code);
     }
     
-    /*public function testPutDocumentSaveAsTiff()
+    public function testPutDocumentSaveAsTiff()
     {
+        $body = '{                    
+                    "TiffCompression": "Ccitt4",
+                    "PageCount": 1,
+                    "PixelFormat": "Format16BppRgb555",
+                    "PaperColor": "Red",
+                    "Resolution": 200,
+                    "Scale": 1.5,
+                    "ImageBrightness": 0.5,
+                    "ImageColorMode": "None",
+                    "ImageContrast": 0.9,
+                    "UseHighQualityRendering": true,
+                    "UseAntiAliasing": true,
+                    "PageIndex": 0,                    
+                    "NumeralFormat": "EasternArabicIndic",
+                    "SaveFormat": "tiff",
+                    "FileName": "MyDocument1.tiff"
+                  }';
         $result = $this->words->PutDocumentSaveAsTiff($name="Test.docx", $resultFile = null, $useAntiAliasing = null, $useHighQualityRendering = null, $imageBrightness = null, $imageColorMode = null, $imageContrast = null, $numeralFormat = null, $pageCount = null, $pageIndex = null, $paperColor = null, $pixelFormat = null, $resolution = null, $scale = null, $tiffCompression = null, $dmlRenderingMode = null, $dmlEffectsRenderingMode = null, $tiffBinarizationMethod = null, $storage = null, $folder = null, $zipOutput = null, $body);
         $this->assertEquals(200, $result->Code);
-    }*/
+    }
     
     /*public function testPutExecuteMailMergeOnline()
     {
